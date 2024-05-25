@@ -1,18 +1,17 @@
 package com.wellsfargo.counselor.entity;
 
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import java.util.Date;
+import jakarta.persistence.*;
 
 @Entity
-public class Security extends Portfolio{
+public class Security {
 
     @Id
     @GeneratedValue()
     private long securityId;
+
+    @ManyToOne
+    private Portfolio portfolio;
 
     @Column(nullable = false)
     private String name;
@@ -24,17 +23,17 @@ public class Security extends Portfolio{
     private float purchasePrice;
 
     @Column(nullable = false)
-    private Date purchaseDate;
+    private String purchaseDate;
 
     @Column(nullable = false)
-    private int quantity;
+    private float quantity;
 
     protected Security() {
 
     }
 
-    public Security(long portfolioId,String name, String category, float purchasePrice, Date purchaseDate, int quantity) {
-        this.portfolioId = getPortfolioId();
+    public Security(Portfolio portfolio, String name, String category, float purchasePrice, String purchaseDate, float quantity) {
+        this.portfolio = portfolio;
         this.name = name;
         this.category = category;
         this.purchasePrice = purchasePrice;
@@ -42,8 +41,16 @@ public class Security extends Portfolio{
         this.quantity = quantity;
     }
 
-    public java.lang.Long getSecurityId() {
+    public long getSecurityId() {
         return securityId;
+    }
+
+    public Portfolio getPortfolio() {
+        return portfolio;
+    }
+
+    public void setPortfolio(Portfolio portfolio) {
+        this.portfolio = portfolio;
     }
 
     public String getName() {
@@ -53,6 +60,7 @@ public class Security extends Portfolio{
     public void setName(String name) {
         this.name = name;
     }
+
     public String getCategory() {
         return category;
     }
@@ -69,23 +77,19 @@ public class Security extends Portfolio{
         this.purchasePrice = purchasePrice;
     }
 
-    public Date getPurchaseDate() {
+    public String getPurchaseDate() {
         return purchaseDate;
     }
 
-    public void setPurchaseDate(Date purchaseDate) {
+    public void setPurchaseDate(String purchaseDate) {
         this.purchaseDate = purchaseDate;
     }
 
-    public int getQuantity() {
+    public float getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(int quantity) {
+    public void setQuantity(float quantity) {
         this.quantity = quantity;
     }
-
-
-
-
 }
